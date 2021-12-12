@@ -4,6 +4,9 @@ import os
 from dotenv import load_dotenv
 import json
 
+import time
+import schedule
+
 # Credentials
 load_dotenv('.env')
 
@@ -36,7 +39,7 @@ def hotspot_by_name(hotspot):
 
 
 	# If the hotspot is offline send a message with info
-	if str(hotspot_status) == 'online':
+	if str(hotspot_status) == 'offline':
 		my_message = 'hotspot: ' + str(hotspot_name) + '\n' + 'status: ' + str(hotspot_status) + '\n' + 'sync status: ' + str(hotspot_sync)
 		telegram_bot_sendtext(my_message)
 	
@@ -66,5 +69,14 @@ def telegram_bot_sendtext(bot_message):
 
 
 #do this for all the hotspots in the hotspots array
-for hotspot in hotspots:
-	test = hotspot_by_name(hotspot)
+def job():
+	for hotspot in hotspots:
+		test = hotspot_by_name(hotspot)
+
+
+schedule.every(1).hour.do(job)
+#keep it runnin
+while True:
+	schedule.run_pending()
+	time.sleep(1)
+

@@ -39,8 +39,8 @@ def hotspot_by_name(hotspot):
 
 
 	# If the hotspot is offline send a message with info
-	if str(hotspot_status) == 'offline':
-		my_message = 'hotspot: ' + str(hotspot_name) + '\n' + 'status: ' + str(hotspot_status) + '\n' + 'sync status: ' + str(hotspot_sync)
+	if str(hotspot_status) == 'online':
+		my_message = '❗️❗️❗️Hotspot offline❗️❗️❗️' + '\n' + 'hotspot: ' + str(hotspot_name) + '\n' + 'STATUS: ' + str(hotspot_status) + '\n' + 'sync status: ' + str(hotspot_sync)
 		telegram_bot_sendtext(my_message)
 	
 # py:function:: sync_status(blockchain_height, hotspot_block_height)
@@ -74,9 +74,11 @@ def job():
 		test = hotspot_by_name(hotspot)
 
 
-schedule.every(1).hour.do(job)
+schedule.every(10).seconds.do(job)
 #keep it runnin
 while True:
 	schedule.run_pending()
 	time.sleep(1)
 
+
+# TODO what if api is timed out make sure to filter a bad response

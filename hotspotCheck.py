@@ -24,24 +24,31 @@ def hotspot_by_name(hotspot):
 	#call the API
 	response = requests.get(api_url + 'hotspots/' + 'name/' + hotspot)
 
-	#get the value's from the response
-	hotspot_name = response.json()['data'][0]['name']
-	hotspot_status = response.json()['data'][0]['status']['online']
-	hotspot_block_height = response.json()['data'][0]['status']['height']
-	blockchain_height = response.json()['data'][0]['block']
+	# if we get a bad respsonse timeout and run the job again 
+	if (response.status_code != 200):
+		time.sleep(3600) #1 uur
+		schedule.every(10).minutes.do(job)
+		telegram_bot_sendtext('we got a timeout from the API. We start again in t -60s')
+	else :
+		#TODO filter when value is no good or error
+		#get the value's from the response
+		hotspot_name = response.json()['data'][0]['name']
+		hotspot_status = response.json()['data'][0]['status']['online']
+		hotspot_block_height = response.json()['data'][0]['status']['height']
+		blockchain_height = response.json()['data'][0]['block']
 
-	# print(json.dumps(response_json, indent=4))
-	# print(hotspot_block_height, blockchain_height, hotspot_status)
+		# print(json.dumps(response_json, indent=4))
+		# print(hotspot_block_height, blockchain_height, hotspot_status)
 
-	#check if the hotspot is in sync with the blockchain 
-	#TODO when is a hotspot out of sync? after how many block difference
-	hotspot_sync = sync_status(blockchain_height, hotspot_block_height)
+		#check if the hotspot is in sync with the blockchain 
+		#TODO when is a hotspot out of sync? after how many block difference
+		hotspot_sync = sync_status(blockchain_height, hotspot_block_height)
 
 
-	# If the hotspot is offline send a message with info
-	if str(hotspot_status) == 'online':
-		my_message = '❗️❗️❗️Hotspot offline❗️❗️❗️' + '\n' + 'hotspot: ' + str(hotspot_name) + '\n' + 'STATUS: ' + str(hotspot_status) + '\n' + 'sync status: ' + str(hotspot_sync)
-		telegram_bot_sendtext(my_message)
+		# If the hotspot is offline send a message with info
+		if str(hotspot_status) == 'offline':
+			my_message = '❗️❗️❗️Hotspot offline❗️❗️❗️' + '\n' + 'hotspot: ' + str(hotspot_name) + '\n' + 'STATUS: ' + str(hotspot_status) + '\n' + 'sync status: ' + str(hotspot_sync)
+			telegram_bot_sendtext(my_message)
 	
 # py:function:: sync_status(blockchain_height, hotspot_block_height)
 #    makes a call to the helium API per hotspot and returns the hotspot details and checks if the hotspot is online and in sync
@@ -74,7 +81,7 @@ def job():
 		test = hotspot_by_name(hotspot)
 
 
-schedule.every(10).seconds.do(job)
+schedule.every(10).minutes.do(job)
 #keep it runnin
 while True:
 	schedule.run_pending()

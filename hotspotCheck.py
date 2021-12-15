@@ -86,6 +86,3 @@ schedule.every(10).minutes.do(job)
 while True:
 	schedule.run_pending()
 	time.sleep(1)
-
-
-# TODO what if api is timed out make sure to filter a bad response

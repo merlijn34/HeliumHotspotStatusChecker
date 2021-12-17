@@ -14,7 +14,7 @@ load_dotenv('.env')
 api_url = 'https://api.helium.io/v1/'
 hotspot_address = os.getenv('HOTSPOT_ADDRESS');
 
-hotspots = ['tangy-blood-lion', 'clumsy-syrup-rooster', 'creamy-tangerine-jaguar']
+hotspots = ['']
 
 # py:function:: hotspot_by_name(hotspot)
 #    makes a call to the helium API per hotspot and returns the hotspot details and checks if the hotspot is online and in sync

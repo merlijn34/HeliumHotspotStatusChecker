@@ -2,7 +2,7 @@
 
 ## this is a script that checks the status of your helium hotspot every X minutes and sends a Telegram message when your hotspot is offline.
 
-Awesome! How does this work?
+**Awesome! How does this work?**
 
 1. first we set up Telegram
   - On Telegram, search @ BotFather, send him a “/start” message

@@ -14,6 +14,7 @@ load_dotenv('.env')
 api_url = 'https://api.helium.io/v1/'
 hotspot_address = os.getenv('HOTSPOT_ADDRESS');
 
+#enter the name of the hostpots you want to listen to like: ['hotspot-bloody-jaguar', 'dancing-jelly-fish']
 hotspots = ['']
 
 # py:function:: hotspot_by_name(hotspot)

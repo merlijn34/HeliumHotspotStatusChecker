@@ -44,7 +44,7 @@
  
 
 
-
+  - ChatId of the bot is in this response above: chat -> id 
   - we save this bot token and bot id in a .env file in the same folder as the script. (there is a example of a .env file in the repo, remove 'example' in the name and save the file with your credentials. Don't upload these private keys anywhere!)
   
  2. We set up the script

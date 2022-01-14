@@ -1,3 +1,4 @@
+import datetime
 import socket
 import time
 import requests
@@ -29,6 +30,8 @@ def ping(ip, port):
 	a_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	
 	result_of_check = a_socket.connect_ex(location)
+	
+	print(datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
 
 	#if we can not make a connection then send a message via telegram
 	if result_of_check != 0: # if 0 it means it was successful

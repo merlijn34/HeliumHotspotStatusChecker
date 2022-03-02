@@ -1,6 +1,6 @@
 # HeliumHotspotStatusChecker
 
-The helium API is always hours behind realtime, so this script works but is not close to realtime.!!
+NOTE: The helium API is always hours behind realtime, so this script works but is not close to realtime.!!
 
 ## this is a script that checks the status of your helium hotspot every X minutes and sends a Telegram message when your hotspot is offline.
 
